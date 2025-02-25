@@ -1,7 +1,5 @@
 package e2.linkedList;
 
-import e0.Wagen;
-
 import java.util.Objects;
 
 public class Data {

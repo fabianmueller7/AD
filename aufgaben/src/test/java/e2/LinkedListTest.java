@@ -1,5 +1,7 @@
-package e2.linkedList;
+package e2;
 
+import e2.linkedList.Data;
+import e2.linkedList.LinkedList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
