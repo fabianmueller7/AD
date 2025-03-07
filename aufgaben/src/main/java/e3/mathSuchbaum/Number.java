@@ -27,7 +27,7 @@ public class Number extends Node {
 
     @Override
     public List<String> compile(List<String> args) {
-        args.add("" + getNumber());
+        args.add("LOAD " + getNumber());
         return args;
     }
 }
