@@ -1,4 +1,4 @@
-package e4.bucketHashtable;
+package e4.hashsetLinkedList;
 
 public class Element {
 

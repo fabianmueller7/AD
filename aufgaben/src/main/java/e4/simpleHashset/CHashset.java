@@ -25,9 +25,9 @@ public class CHashset {
 
             Element element = new Element(this.hash(value),value);
             int prefferedIndex = this.hashCodeToArrayIndex(element.getHash());
-            int index = this.findEmptySlot(prefferedIndex);
+            //int index = this.findEmptySlot(prefferedIndex);
 
-            this.hashset[index] = element;
+            this.hashset[prefferedIndex] = element;
     }
 
     public int getIndexOf(final int hashcode) {
@@ -63,6 +63,7 @@ public class CHashset {
     If this doesn´t work, it goes through the whole array to find an empty slot.
     If no empty slot is found, is uses the preferred slot.
      */
+
     private int findEmptySlot(final int startindex) {
         int slot = startindex;
         do {
@@ -73,6 +74,7 @@ public class CHashset {
         } while(this.getByIndex(slot) != null && slot != startindex);
         return slot;
     }
+
 
     public String toString() {
         String str = "";

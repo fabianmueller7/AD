@@ -1,4 +1,4 @@
-package e4.advancedHashset;
+package e4.hashsetLinkedList;
 
 public class LinkedList {
 
