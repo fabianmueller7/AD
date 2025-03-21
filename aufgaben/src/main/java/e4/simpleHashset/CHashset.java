@@ -13,7 +13,6 @@ public class CHashset {
         hashset.add(5);
         hashset.add(7);
 
-
         System.out.println(hashset);
     }
 

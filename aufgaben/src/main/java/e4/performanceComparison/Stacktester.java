@@ -74,12 +74,12 @@ public class Stacktester {
     public static long testJavaDeque(final int numberOfElements, final int stringLength) {
 
         //setup
-        Deque<String> deque = new ArrayDeque<>();
+        Deque<String> deque = new ArrayDeque<>(numberOfElements);
         final long starttime = System.nanoTime();
 
         //act
         for (int i = 0; i < numberOfElements; i++) {
-            deque.offerLast(Stacktester.getRandomString(stringLength));
+            deque.offer(Stacktester.getRandomString(stringLength));
         }
 
         //terminate
@@ -92,10 +92,14 @@ public class Stacktester {
 
     public static String getRandomString(int length)
     {
+        /*
         String randomStr = UUID.randomUUID().toString();
         while(randomStr.length() < length) {
             randomStr += UUID.randomUUID().toString();
         }
         return randomStr.substring(0, length);
+
+         */
+        return "test";
     }
 }
