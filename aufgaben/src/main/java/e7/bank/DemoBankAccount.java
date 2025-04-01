@@ -35,7 +35,7 @@ public final class DemoBankAccount {
     /**
      * Privater Konstruktor.
      */
-    private DemoBankAccount() {
+    DemoBankAccount() {
     }
 
     /**
@@ -45,12 +45,15 @@ public final class DemoBankAccount {
      * @throws InterruptedException wenn Warten unterbrochen wird.
      */
     public static void main(String[] args) throws InterruptedException {
+        DemoBankAccount demo = new DemoBankAccount();
+        demo.testAtomic(1000,5);
+    }
+
+    public void testAtomic(final int amount, final int accounts) {
         final ArrayList<BankAccount> source = new ArrayList<>();
         final ArrayList<BankAccount> target = new ArrayList<>();
-        final int amount = 100_000;
-        final int number = 5;
-        final int nThreads = number*2;
-        for (int i = 0; i < number; i++) {
+        final int nThreads = accounts *2;
+        for (int i = 0; i < accounts; i++) {
             source.add(new BankAccount(amount));
             target.add(new BankAccount());
         }
@@ -73,9 +76,11 @@ public final class DemoBankAccount {
             }
             executor.shutdown();
         }
+        /*
         LOG.info("Bank accounts after transfers");
-        for (int i = 0; i < number; i++) {
+        for (int i = 0; i < accounts; i++) {
             LOG.info("source({}) = {}; target({}) = {};", i, source.get(i).getBalance(), i, target.get(i).getBalance());
         }
+         */
     }
 }
