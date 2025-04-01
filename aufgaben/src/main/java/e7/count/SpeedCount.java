@@ -72,7 +72,7 @@ public final class SpeedCount {
      * @param args not used.
      */
     public static void main(final String args[]) {
-        final int passes = 100;
+        final int passes = 10;
         final int threads = 10;
         final int counts = 1_000_000;
         final Counter counterSync = new SynchronizedCounter();
