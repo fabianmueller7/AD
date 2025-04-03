@@ -34,7 +34,7 @@ public final class Latch implements Synch {
     @Override
     public void acquire() throws InterruptedException {
         synchronized (lock) {
-            while (!released) {
+            while (!released) { // wait immer in einer while-Schleife
                 lock.wait();
             }
         }

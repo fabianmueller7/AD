@@ -34,10 +34,11 @@ public final class DemoWaitPool {
      * @throws InterruptedException wenn das warten unterbrochen wird.
      */
     public static void main(final String args[]) throws InterruptedException {
-        final MyTask waiter = new MyTask(LOCK);
+        final MyTask waiter = new MyTask(LOCK); // Thread starten dauert lange, passiert aber asynchron
         new Thread(waiter).start();
+        Thread.sleep(1000);// Warten bis der Thread gestartet ist, sonst geht das nofity ins nichts, da der Thread noch nicht wartet.
         synchronized (LOCK) {
-            Thread.sleep(1000);
+            //Thread.sleep(1000) // Ergibt Deadlock => Da lock.wait() in einem synchronizied block ist, kommt dieser gar nicht zum warten. (Signal geht ins leere)
             LOCK.notifyAll();
         }
     }

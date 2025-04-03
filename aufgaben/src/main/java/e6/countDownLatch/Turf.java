@@ -22,11 +22,13 @@ public class Turf {
      */
     public static void main(final String[] args) throws InterruptedException {
         final CountDownLatch starterBox = new CountDownLatch(1);
+        final CountDownLatch inboxSignal = new CountDownLatch(HORSES);
         for (int i = 1; i <= HORSES; i++) {
-            Thread.startVirtualThread(new RaceHorse(starterBox, "Horse " + i));
+            Thread.startVirtualThread(new RaceHorse(starterBox, inboxSignal, "Horse " + i));
         }
+
+        inboxSignal.await(); //Wartet, dass alle Pferde bereit sind.
         LOG.info("Start...");
-        Thread.sleep(1000);
-        starterBox.countDown();
+        starterBox.countDown(); //Startet Rennen
     }
 }

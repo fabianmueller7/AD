@@ -28,7 +28,8 @@ import java.util.concurrent.CountDownLatch;
 public final class RaceHorse implements Runnable {
 
     private static final Logger LOG = LoggerFactory.getLogger(RaceHorse.class);
-    private final CountDownLatch latch;
+    private final CountDownLatch startSignal;
+    private final CountDownLatch inbox;
     private final String name;
     private final Random random;
 
@@ -38,9 +39,10 @@ public final class RaceHorse implements Runnable {
      * @param startSignal Starterbox.
      * @param name Name des Pferdes.
      */
-    public RaceHorse(final CountDownLatch startSignal, final String name) {
-        this.latch = startSignal;
+    public RaceHorse(final CountDownLatch startSignal,final CountDownLatch inboxsignal, final String name) {
+        this.startSignal = startSignal;
         this.name = name;
+        this.inbox = inboxsignal;
         this.random = new Random();
     }
 
@@ -48,7 +50,8 @@ public final class RaceHorse implements Runnable {
     public void run() {
         LOG.info("Rennpferd {} geht in die Box.", name);
         try {
-            latch.await();
+            inbox.countDown(); //Pferd gibt bereit signal
+            startSignal.await(); //Wartet auf Rennstart
             LOG.info("Rennpferd {} laeuft los...", name);
             Thread.sleep(random.nextInt(3000));
         } catch (InterruptedException ex) {
