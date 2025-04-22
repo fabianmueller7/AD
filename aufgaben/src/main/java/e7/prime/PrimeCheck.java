@@ -45,10 +45,11 @@ public final class PrimeCheck {
      * @param args not used.
      */
     public static void main(String[] args) {
+        long start = System.currentTimeMillis();
         try (final ExecutorService executor = Executors.newFixedThreadPool(PrimeCheck.nThreads)) {
             for (int i = 0; i < nThreads; i++) { // Starting n number of Threads
                     executor.execute(() -> {
-                        while (count.get() <= 100) { // Checking if done inside the thread, else they would just continue
+                        while (count.get() <= 1000) { // Checking if done inside the thread, else they would just continue
                             BigInteger number = new BigInteger(1024, new Random());
                             if (number.isProbablePrime(Integer.MAX_VALUE)) {
                                 LOG.info("{} : {}...", count, number.toString().substring(0, 20));
@@ -59,6 +60,8 @@ public final class PrimeCheck {
             }
             executor.shutdown();
         }
+        long end = System.currentTimeMillis();
+        LOG.info("Total time: {} ms", end - start);
 
     }
 }
