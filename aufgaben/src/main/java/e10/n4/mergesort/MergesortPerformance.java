@@ -41,21 +41,36 @@ public final class MergesortPerformance {
      * @param args not used.
      */
     public static void main(final String[] args) {
-        final int size = 300_000;
-        final int[] arrayOriginal = new int[size];
+
         try (final ForkJoinPool pool = new ForkJoinPool()) {
+            for (int size  = 3; size <= 300_000_000; size = size*100) {
+
+                LOG.info("   --------------- Number of elements: {} ---------------", size);
+            final int[] arrayOriginal = new int[size];
+
             RandomInitTask initTask = new RandomInitTask(arrayOriginal, 100);
             pool.invoke(initTask);
             int[] array = Arrays.copyOf(arrayOriginal, size);
             final MergesortTask sortTask = new MergesortTask(array);
+            long startConc = System.currentTimeMillis();
             pool.invoke(sortTask);
-            LOG.info("Conc. Mergesort : {} msec.", '?');
+            long endConc = System.currentTimeMillis();
+            LOG.info("Conc. Mergesort : {} msec.", endConc - startConc);
+
+            //Messung Mergesort sequenziell
             array = Arrays.copyOf(arrayOriginal, size);
+            long startRec = System.currentTimeMillis();
             MergesortRecursive.mergeSort(array);
-            LOG.info("MergesortRec.   : {} msec.", '?');
-            array = Arrays.copyOf(arrayOriginal, size);
-            Arrays.parallelSort(array);
-            LOG.info("ParallelSort    : {} msec.", '?');
+            long endRec = System.currentTimeMillis();
+            LOG.info("Seqzuenziell.   : {} msec.", endRec - startRec);
+
+            //Messung parallele Verarbeitung
+            array = Arrays.copyOf(arrayOriginal, size); // erstelle Array
+            long paraStartTime = System.currentTimeMillis();
+            Arrays.parallelSort(array); // starte sortieren
+            long paraEndTime = System.currentTimeMillis();
+            LOG.info("ParallelSort    : {} msec.", paraEndTime - paraStartTime);
+            }
         } finally {
             // Executor shutdown
         }

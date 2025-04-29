@@ -44,7 +44,11 @@ public final class QuicksortRecursive {
      * @param endIdx end index of the array.
      */
     public static void quicksort(int[] array, int startIdx, int endIdx) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (startIdx < endIdx) {
+            int p = partition(array,startIdx,endIdx);
+            quicksort(array,startIdx,p);
+            quicksort(array,p+1,endIdx);
+        }
     }
 
     /**
@@ -57,12 +61,35 @@ public final class QuicksortRecursive {
      * @return the partition index.
      */
     public static int partition(int[] array, int left, int right) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        final int pivot = array[left];
+        int i = left-1;
+        int j = right+1;
+
+        while(true) {
+
+            do {
+                j--;
+            } while (array[j] > pivot);
+            do {
+                i++;
+            }while (array[i] < pivot);
+
+            if ( i >= j) {
+                return j;
+            }
+
+            int temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
     }
 
-    private static void exchange(final int[] array, final int i, final int j) {
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+    static boolean isSorted(int[] array) {
+        for (int i = 1; i < array.length; i++) {
+            if (array[i-1] > array[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
