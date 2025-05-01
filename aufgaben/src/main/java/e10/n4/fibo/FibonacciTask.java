@@ -15,6 +15,11 @@
  */
 package e10.n4.fibo;
 
+import e10.n4.mergesort.MergesortRecursive;
+import e10.n4.mergesort.MergesortTask;
+import e10.n4.quicksort.QuicksortRecursive;
+import e10.n4.quicksort.QuicksortTask;
+
 import java.util.concurrent.RecursiveTask;
 
 /**
@@ -23,10 +28,12 @@ import java.util.concurrent.RecursiveTask;
 @SuppressWarnings("serial")
 public final class FibonacciTask extends RecursiveTask<Long> {
 
+    private static final int THRESHOLD = 25;
     /**
      * Gegebene Zahl für die gesuchte Fibonacci Zahl.
      */
     private final int n;
+
 
     /**
      * Erzeugt einen Fibonacci Task.
@@ -39,6 +46,15 @@ public final class FibonacciTask extends RecursiveTask<Long> {
 
     @Override
     protected Long compute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        long result = 0;
+        if(n <= THRESHOLD) {
+            return FibonacciCalc.fiboRecursive(n);
+        } else {
+            final FibonacciTask taskLeft = new FibonacciTask(n-1);
+            final FibonacciTask taskRight = new FibonacciTask(n -2);
+            taskLeft.fork();
+            result += taskRight.invoke() + taskLeft.join();
+        }
+        return result;
     }
 }

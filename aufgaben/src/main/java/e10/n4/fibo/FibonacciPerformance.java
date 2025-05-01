@@ -38,16 +38,27 @@ public final class FibonacciPerformance {
      */
     public static void main(final String[] args) {
         final int n = 42;
-        final FibonacciTask task = new FibonacciTask(n);
+        long result =0;
+
         LOG.info("fibo({}) start...", n);
-        long result = task.invoke();
-        LOG.info("Conc. recursive = {}", result);
-        LOG.info("Conc. recursive : {} msec.", '?');
+
+        final FibonacciTask task = new FibonacciTask(n);
+        long startParallel = System.currentTimeMillis();
+        result = task.invoke();
+        long endParallel = System.currentTimeMillis();
+        LOG.info("Parallel rekursiv = {}", result);
+        LOG.info("Parallel rekursiv : {} msec.", endParallel - startParallel);
+
+        long startIterative = System.currentTimeMillis();
         result = FibonacciCalc.fiboIterative(n);
-        LOG.info("Func. iterative = {}", result);
-        LOG.info("Func. iterative : {} msec.", '?');
+        long endIterative = System.currentTimeMillis();
+        LOG.info("Iterativ = {}", result);
+        LOG.info("Iterativ : {} msec.", endIterative - startIterative);
+
+        long startRecursive = System.currentTimeMillis();
         result = FibonacciCalc.fiboRecursive(n);
-        LOG.info("Func. recursive = {}", result);
-        LOG.info("Func. recursive : {} sec.", '?');
+        long endRecursive = System.currentTimeMillis();
+        LOG.info("Einfach rekursiv = {}", result);
+        LOG.info("Einfach rekursiv : {} msec.", endRecursive - startRecursive);
     }
 }
