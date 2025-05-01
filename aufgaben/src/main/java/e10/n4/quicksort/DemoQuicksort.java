@@ -41,7 +41,7 @@ public final class DemoQuicksort {
      * @param args not used.
      */
     public static void main(final String[] args) {
-        final int size = 10;
+        final int size = 300_000_000;
         final int[] arrayOriginal = new int[size];
         try (final ForkJoinPool pool = new ForkJoinPool()) {
 
@@ -52,20 +52,20 @@ public final class DemoQuicksort {
             long taskStart = System.currentTimeMillis();
             pool.invoke(sortTask);
             long taskEnd = System.currentTimeMillis();
-            LOG.info("QuicksortRec.  : {} sec. ; Sorted: {} ", taskEnd - taskStart, QuicksortRecursive.isSorted(arrayTask));
+            LOG.info("Parallel Quicksort.  : {} ms. ; Sorted: {} ", taskEnd - taskStart, QuicksortRecursive.isSorted(arrayTask));
 
             int[] arrayRec = Arrays.copyOf(arrayOriginal, size);
             long recStart = System.currentTimeMillis();
             QuicksortRecursive.quicksort(arrayRec);
             long recEnd = System.currentTimeMillis();
-            LOG.info("QuicksortRec.  : {} sec. ; Sorted: {} ", recEnd - recStart, QuicksortRecursive.isSorted(arrayRec));
+            LOG.info("QuicksortRec.  : {} ms. ; Sorted: {} ", recEnd - recStart, QuicksortRecursive.isSorted(arrayRec));
             int[] arraySort = Arrays.copyOf(arrayOriginal, size);
 
 
             long arraySortStart = System.currentTimeMillis();
             Arrays.sort(arraySort);
             long arraySortEnd = System.currentTimeMillis();
-            LOG.info("Arrays.sort    : {} sec.", arraySortEnd - arraySortStart);
+            LOG.info("Arrays.sort    : {} ms.", arraySortEnd - arraySortStart);
         } finally {
             // Executor shutdown
         }

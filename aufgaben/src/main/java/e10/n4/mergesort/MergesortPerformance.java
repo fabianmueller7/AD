@@ -43,8 +43,8 @@ public final class MergesortPerformance {
     public static void main(final String[] args) {
 
         try (final ForkJoinPool pool = new ForkJoinPool()) {
-            for (int size  = 3; size <= 300_000_000; size = size*100) {
 
+            final int size = 300_000_000;
                 LOG.info("   --------------- Number of elements: {} ---------------", size);
             final int[] arrayOriginal = new int[size];
 
@@ -55,22 +55,22 @@ public final class MergesortPerformance {
             long startConc = System.currentTimeMillis();
             pool.invoke(sortTask);
             long endConc = System.currentTimeMillis();
-            LOG.info("Conc. Mergesort : {} msec.", endConc - startConc);
+            LOG.info("Parallel Mergesort : {} msec.", endConc - startConc);
 
             //Messung Mergesort sequenziell
             array = Arrays.copyOf(arrayOriginal, size);
             long startRec = System.currentTimeMillis();
-            MergesortRecursive.mergeSort(array);
+            //MergesortRecursive.mergeSort(array);
             long endRec = System.currentTimeMillis();
             LOG.info("Seqzuenziell.   : {} msec.", endRec - startRec);
 
             //Messung parallele Verarbeitung
             array = Arrays.copyOf(arrayOriginal, size); // erstelle Array
             long paraStartTime = System.currentTimeMillis();
-            Arrays.parallelSort(array); // starte sortieren
+            //Arrays.parallelSort(array); // starte sortieren
             long paraEndTime = System.currentTimeMillis();
-            LOG.info("ParallelSort    : {} msec.", paraEndTime - paraStartTime);
-            }
+            LOG.info("Arrays.parallelSort  : {} msec.", paraEndTime - paraStartTime);
+
         } finally {
             // Executor shutdown
         }

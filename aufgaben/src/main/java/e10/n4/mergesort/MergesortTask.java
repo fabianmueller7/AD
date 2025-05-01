@@ -24,7 +24,7 @@ import java.util.concurrent.RecursiveAction;
 @SuppressWarnings("serial")
 public final class MergesortTask extends RecursiveAction {
 
-    private static final int THRESHOLD = 600;
+    private static final int THRESHOLD = 6_000_000;
     /**
      * Zu sortierendes Array.
      */
