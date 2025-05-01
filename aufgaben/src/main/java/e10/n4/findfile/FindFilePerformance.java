@@ -40,13 +40,21 @@ public final class FindFilePerformance {
      */
     public static void main(String[] args) {
         final String search = "find.me";
-        final File rootDir = new File(System.getProperty("user.home"));
-        LOG.info("Start searching '{}' recurive in '{}'", search, rootDir);
+
+        final File rootDir = new File("/Users/muellefa/repos");
+        LOG.info("Start searching '{}' recursive in '{}'", search, rootDir);
+
+        long startRec = System.currentTimeMillis();
         FindFile.findFile(search, rootDir);
-        LOG.info("Found in {} msec.", '?');
+        long endRec = System.currentTimeMillis();
+        LOG.info("Einfach Rekursiv in {} msec.", endRec - startRec);
         LOG.info("Find '{}' concurrent in '{}'", search, rootDir);
+
+        long startParallel = System.currentTimeMillis();
         final FindFileTask root = new FindFileTask(search, rootDir);
+        long endParallel = System.currentTimeMillis();
         LOG.info(root.invoke());
-        LOG.info("Found in {} msec.", '?');
+        LOG.info("Found in {} msec.", endParallel - startParallel);
+        LOG.info("Find '{}' concurrent in '{}'", search, root.getRawResult());
     }
 }

@@ -50,12 +50,24 @@ public final class FindFileTask extends CountedCompleter<String> {
 
     private FindFileTask(final CountedCompleter<?> parent, final String regex, final File dir,
             final AtomicReference<String> result) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super(parent);
+        this.result = result;
+        this.regex = regex;
+        this.dir = dir;
     }
 
     @Override
     public void compute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        final File[] list = dir.listFiles();
+        for (File file : list) {
+            if (file.isDirectory()) {
+                new FindFileTask(this, regex, file.getAbsoluteFile(), result).compute();
+            } else if (regex.equalsIgnoreCase(file.getName())) {
+                this.result.set(file.getAbsolutePath());
+                this.quietlyCompleteRoot();
+                break;
+            }
+        }
     }
 
     @Override

@@ -18,6 +18,8 @@ package e10.n4.fibo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.ForkJoinPool;
+
 /**
  * Performance Vergleich der Fibonacci Implementationen.
  */
@@ -42,9 +44,11 @@ public final class FibonacciPerformance {
 
         LOG.info("fibo({}) start...", n);
 
+        final ForkJoinPool forkJoinPool = new ForkJoinPool();
         final FibonacciTask task = new FibonacciTask(n);
         long startParallel = System.currentTimeMillis();
-        result = task.invoke();
+        //result = task.invoke(); //Common pool
+        forkJoinPool.invoke(task); //Forkjoinpool
         long endParallel = System.currentTimeMillis();
         LOG.info("Parallel rekursiv = {}", result);
         LOG.info("Parallel rekursiv : {} msec.", endParallel - startParallel);
