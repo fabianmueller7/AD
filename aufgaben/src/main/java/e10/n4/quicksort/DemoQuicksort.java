@@ -45,7 +45,7 @@ public final class DemoQuicksort {
         final int[] arrayOriginal = new int[size];
         try (final ForkJoinPool pool = new ForkJoinPool()) {
 
-            RandomInitTask initTask = new RandomInitTask(arrayOriginal, 100);
+            RandomInitTask initTask = new RandomInitTask(arrayOriginal, 100_000_000);
             pool.invoke(initTask);
             int[] arrayTask = Arrays.copyOf(arrayOriginal, size);
             final QuicksortTask sortTask = new QuicksortTask(arrayTask);

@@ -49,6 +49,7 @@ public final class FibonacciTask extends RecursiveTask<Long> {
         long result = 0;
         if(n <= THRESHOLD) {
             return FibonacciCalc.fiboRecursive(n);
+            //return  FibonacciCalc.fiboIterative(n);
         } else {
             final FibonacciTask taskLeft = new FibonacciTask(n-1);
             final FibonacciTask taskRight = new FibonacciTask(n -2);

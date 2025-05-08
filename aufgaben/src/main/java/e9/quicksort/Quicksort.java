@@ -71,7 +71,7 @@ public class Quicksort {
 
         while(true) {
 
-            do {
+            do { // Do-while um keine Endlosschleifen zu haben, falls Pivot maximum wäre
                 j--;
             } while (numbers[j] > pivot);
             do {

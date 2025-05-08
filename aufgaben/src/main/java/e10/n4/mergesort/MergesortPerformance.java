@@ -44,7 +44,7 @@ public final class MergesortPerformance {
 
         try (final ForkJoinPool pool = new ForkJoinPool()) {
 
-            final int size = 300_000_000;
+            final int size = 30_000_000;
                 LOG.info("   --------------- Number of elements: {} ---------------", size);
             final int[] arrayOriginal = new int[size];
 
@@ -60,14 +60,14 @@ public final class MergesortPerformance {
             //Messung Mergesort sequenziell
             array = Arrays.copyOf(arrayOriginal, size);
             long startRec = System.currentTimeMillis();
-            //MergesortRecursive.mergeSort(array);
+            MergesortRecursive.mergeSort(array);
             long endRec = System.currentTimeMillis();
             LOG.info("Seqzuenziell.   : {} msec.", endRec - startRec);
 
             //Messung parallele Verarbeitung
             array = Arrays.copyOf(arrayOriginal, size); // erstelle Array
             long paraStartTime = System.currentTimeMillis();
-            //Arrays.parallelSort(array); // starte sortieren
+            Arrays.parallelSort(array); // starte sortieren
             long paraEndTime = System.currentTimeMillis();
             LOG.info("Arrays.parallelSort  : {} msec.", paraEndTime - paraStartTime);
 

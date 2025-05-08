@@ -24,7 +24,7 @@ import java.util.concurrent.RecursiveAction;
 @SuppressWarnings("serial")
 public final class MergesortTask extends RecursiveAction {
 
-    private static final int THRESHOLD = 6_000_000;
+    private static final int THRESHOLD = 1_500;
     /**
      * Zu sortierendes Array.
      */
@@ -56,9 +56,9 @@ public final class MergesortTask extends RecursiveAction {
     @Override
     protected void compute() {
         if (max - min < THRESHOLD) {
-            MergesortRecursive.mergeSortPart(array, min, max);
+            //MergesortRecursive.mergeSortPart(array, min, max);
             //Arrays.sort(array, min, max);
-            //Arrays.parallelSort(array, min, max);
+            Arrays.parallelSort(array, min, max);
         } else {
             final int mid = min + (max - min) / 2;
             invokeAll(new MergesortTask(array, min, mid), new MergesortTask(array, mid, max));
