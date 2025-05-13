@@ -4,7 +4,7 @@ public class AnanasSearch {
 
     public static int[] randTabelle = {0,0,1,2,3,0};
 
-    public static int stateSearch(final String text, String pattern) {
+    public static int kmpSearch(final String text, String pattern) {
         int[] tabelle = randTabelle;
         int j = 0; // Index im Pattern = Zustand des Automaten
 
@@ -30,7 +30,7 @@ public class AnanasSearch {
 
     public static void main(String[] args) {
         String test1 = "ananasnanasnanaanan";
-        int restult = AnanasSearch.stateSearch(test1, "ananas");
+        int restult = AnanasSearch.kmpSearch(test1, "ananas");
         System.out.println("Gefunden bei: " + restult);
     }
 
